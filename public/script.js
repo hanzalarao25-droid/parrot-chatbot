@@ -1,45 +1,28 @@
-// Send message to chatbot
 function sendMessage(text = null) {
     let input = document.getElementById("userInput");
     let message = text || input.value.trim();
-
+    
     if (message === "") return;
-
+    
     let chatBox = document.getElementById("chat-box");
-
-    // Add user message
+    
+    // User message
     let userDiv = document.createElement("div");
     userDiv.className = "user-message";
     userDiv.innerText = message;
     chatBox.appendChild(userDiv);
-
+    
     // Clear input
     if (!text) input.value = "";
     
-    // Show typing indicator
-    let typingDiv = document.createElement("div");
-    typingDiv.className = "bot-message typing";
-    typingDiv.innerText = "🦜 Parrot is thinking...";
-    chatBox.appendChild(typingDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
     // Send to backend
     fetch("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        // Remove typing indicator
-        chatBox.removeChild(typingDiv);
-        
-        // Add bot response
         let botDiv = document.createElement("div");
         botDiv.className = "bot-message";
         botDiv.innerText = data.reply;
@@ -47,75 +30,48 @@ function sendMessage(text = null) {
         chatBox.scrollTop = chatBox.scrollHeight;
     })
     .catch(error => {
-        // Remove typing indicator
-        chatBox.removeChild(typingDiv);
-        
-        // Show error message
-        let errorDiv = document.createElement("div");
-        errorDiv.className = "bot-message error";
-        errorDiv.innerText = "Sorry, I'm having trouble connecting. Please try again.";
-        chatBox.appendChild(errorDiv);
         console.error("Chat error:", error);
+        let errorDiv = document.createElement("div");
+        errorDiv.className = "bot-message";
+        errorDiv.innerText = "Sorry, I'm having trouble connecting.";
+        chatBox.appendChild(errorDiv);
     });
 }
 
-// Handle Enter key press
-function handleKeyPress(event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); // Prevent form submission
-        sendMessage();
-    }
-}
-
-// Quick send buttons
 function quickSend(text) {
     sendMessage(text);
 }
 
-// Voice input
+// 🎤 VOICE INPUT
 function startVoice() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (!SpeechRecognition) {
-        alert("Voice input not supported in your browser. Try Chrome or Edge.");
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Voice input not supported in this browser");
         return;
     }
 
-    const recognition = new SpeechRecognition();
+    const recognition = new webkitSpeechRecognition();
     recognition.lang = "en-US";
     recognition.start();
 
     recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById("userInput").value = transcript;
-        sendMessage(transcript);
-    };
-
-    recognition.onerror = function(event) {
-        console.error("Speech recognition error:", event.error);
-        alert("Voice input failed. Please type your question.");
+        document.getElementById("userInput").value = event.results[0][0].transcript;
+        sendMessage();
     };
 }
 
-// Dark/Light mode toggle
+// 🌙 DARK MODE
 function toggleDark() {
     document.body.classList.toggle("dark");
-    
-    // Save preference
-    if (document.body.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-    } else {
-        localStorage.setItem("theme", "light");
+}
+
+// ENTER KEY SUPPORT
+function handleKeyPress(event) {
+    if (event.key === "Enter") {
+        sendMessage();
     }
 }
 
-// Load saved theme on page load
+// Auto-focus input on load
 window.onload = function() {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-        document.body.classList.add("dark");
-    }
-    
-    // Auto-focus input
     document.getElementById("userInput").focus();
 };
