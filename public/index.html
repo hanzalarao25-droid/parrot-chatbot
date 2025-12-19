@@ -3,17 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Parrots Knowledge Chatbot</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parrots Knowledge Chatbot</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
     <div class="chat-container">
 
         <div class="chat-header">
-            <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="avatar">
+            <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="avatar" alt="Parrot Avatar">
             <span>🦜 Parrots Knowledge Chatbot</span>
             <button class="dark-btn" onclick="toggleDark()">🌙</button>
         </div>
@@ -21,7 +20,7 @@
         <div id="chat-box" class="chat-box">
             <div class="bot-message">
                 Hello! Ask me about parrots 🦜<br>
-                (Food, Care, Lifespan, Types)
+                Try: Food, Care, Lifespan, Types, Health, Talk, or say Hello!
             </div>
         </div>
 
@@ -30,12 +29,19 @@
             <button onclick="quickSend('care')">🏡 Care</button>
             <button onclick="quickSend('lifespan')">⏳ Lifespan</button>
             <button onclick="quickSend('types')">🦜 Types</button>
+            <button onclick="quickSend('hello')">👋 Hello</button>
+            <button onclick="quickSend('health')">💊 Health</button>
         </div>
 
         <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Type your question...">
+            <input type="text" id="userInput" placeholder="Type your question about parrots..."
+                onkeypress="handleKeyPress(event)">
             <button onclick="startVoice()">🎤</button>
             <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <div class="hint">
+            💡 Try: "What do parrots eat?", "How long do parrots live?", "Types of parrots"
         </div>
 
     </div>

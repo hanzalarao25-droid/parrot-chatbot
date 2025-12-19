@@ -1,9 +1,14 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 
-app.use(express.json());
-app.use(express.static("public"));
+// 1. Serve static files FIRST
+app.use(express.static(path.join(__dirname, "public")));
 
+// 2. Parse JSON for API
+app.use(express.json());
+
+// 3. Chat API endpoint
 app.post("/chat", (req, res) => {
     const msg = req.body.message.toLowerCase();
     let reply = "Sorry, I don't have information on that.";
@@ -36,6 +41,25 @@ app.post("/chat", (req, res) => {
     res.json({ reply: reply });
 });
 
-app.listen(3000, () => {
-    console.log("Parrots Knowledge Chatbot running on port 3000");
+// 4. Explicit root route
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+// 5. Wildcard route for SPA
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// 6. Port configuration
+const PORT = process.env.PORT || 3000;
+
+// 7. Export for Vercel
+module.exports = app;
+
+// 8. Only listen locally, not on Vercel
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Parrots Knowledge Chatbot running on port ${PORT}`);
+    });
+}
