@@ -1,0 +1,143 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to right, #56ab2f, #a8e063);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CHAT CONTAINER */
+.chat-container {
+    width: 100%;
+    max-width: 380px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* HEADER */
+.chat-header {
+    background: #2e7d32;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header span {
+    font-weight: bold;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+}
+
+.dark-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+}
+
+/* CHAT BOX */
+.chat-box {
+    height: 300px;
+    padding: 10px;
+    background: #f4f4f4;
+    overflow-y: auto;
+}
+
+/* MESSAGES */
+.user-message {
+    background: #c8e6c9;
+    margin: 5px 0;
+    padding: 8px 10px;
+    border-radius: 10px;
+    text-align: right;
+    max-width: 80%;
+    margin-left: auto;
+}
+
+.bot-message {
+    background: #e0e0e0;
+    margin: 5px 0;
+    padding: 8px 10px;
+    border-radius: 10px;
+    text-align: left;
+    max-width: 80%;
+}
+
+/* QUICK BUTTONS */
+.quick-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+    background: #e8f5e9;
+}
+
+.quick-buttons button {
+    padding: 6px 10px;
+    border: none;
+    background: #66bb6a;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.quick-buttons button:hover {
+    background: #388e3c;
+}
+
+/* INPUT */
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+}
+
+.chat-input button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* 🌙 DARK MODE */
+body.dark {
+    background: #121212;
+}
+
+body.dark .chat-container {
+    background: #1e1e1e;
+}
+
+body.dark .chat-box {
+    background: #2b2b2b;
+}
+
+body.dark .bot-message {
+    background: #424242;
+    color: white;
+}
+
+body.dark .user-message {
+    background: #388e3c;
+    color: white;
+}

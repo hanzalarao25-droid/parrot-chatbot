@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Parrots Knowledge Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+            <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="avatar">
+            <span>🦜 Parrots Knowledge Chatbot</span>
+            <button class="dark-btn" onclick="toggleDark()">🌙</button>
+        </div>
+
+        <div id="chat-box" class="chat-box">
+            <div class="bot-message">
+                Hello! Ask me about parrots 🦜<br>
+                (Food, Care, Lifespan, Types)
+            </div>
+        </div>
+
+        <div class="quick-buttons">
+            <button onclick="quickSend('food')">🍎 Food</button>
+            <button onclick="quickSend('care')">🏡 Care</button>
+            <button onclick="quickSend('lifespan')">⏳ Lifespan</button>
+            <button onclick="quickSend('types')">🦜 Types</button>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your question...">
+            <button onclick="startVoice()">🎤</button>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
